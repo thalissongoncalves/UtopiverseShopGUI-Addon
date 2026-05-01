@@ -1,0 +1,79 @@
+# UtopiverseShopGUI-Addon — Rotating Sell Prices
+# Each group has exactly one boosted item at a time, chosen randomly.
+
+settings:
+  # How often the plugin checks for expired rotation groups (in seconds)
+  check-interval-seconds: 300
+
+# Post-sale correction for /sellg (ShopGUIPlus-SellGUI). Uses Vault economy to adjust the player balance.
+# The values below are conservative — SellGUI may credit the player several ticks after the inventory closes.
+sellgui-integration:
+  enabled: true
+  correction-delay-ticks: 10
+  correction-balance-retry-ticks: 15
+  correction-max-balance-retries: 3
+  log-price-modifier-refresh: false
+  # If true, ignores inventory closes where no content items are present (more restrictive matching)
+  require-content-items: false
+  # Used as fallback when the SellGUI config.yml is not accessible
+  title-contains: "Sell GUI"
+  rows: 6
+
+messages:
+  # %rotatingsell_group_{Farming|MobDrops|Resources}% — one hologram line per group (only boosted item).
+  # Variables: %group% (canonical name), %item% (pretty name, e.g. "Baked Potato"), %multiplier% (e.g. "1.15")
+  group-format: "&f%item% &a%multiplier%x"
+
+  # %rotatingsell_remaining_{group}%
+  timeframe-format: "&7%time%"
+
+  # %rotatingsell_info_{group}% — e.g. "Diamond: 2.22x - 2d 5h"
+  info-format: "%item%: %multiplier%x - %time%"
+
+groups:
+  # How min/max work:
+  #   The values are the actual sell multipliers applied directly.
+  #   Examples:
+  #     0.50  →  0.50x  (item sells for 50% of base price — penalty)
+  #     1.00  →  1.00x  (default price, no change)
+  #     1.80  →  1.80x  (item sells for 80% more than base price — boost)
+  #   The result is clamped to a minimum of 0.01x to prevent zero/negative prices.
+  Farming:
+    min: 0.60
+    max: 1.80
+    duration: 3d
+    items:
+      - BEETROOT
+      - PUMPKIN
+      - MELON_SLICE
+      - SUGAR_CANE
+      - CACTUS
+      - BAMBOO
+      - NETHER_WART
+
+  MobDrops:
+    min: 0.60
+    max: 1.80
+    duration: 3d
+    items:
+      - ROTTEN_FLESH
+      - BONE
+      - STRING
+      - SPIDER_EYE
+      - GUNPOWDER
+      - SLIME_BALL
+      - BLAZE_ROD
+      - ENDER_PEARL
+
+  Resources:
+    min: 0.60
+    max: 1.80
+    duration: 3d
+    items:
+      - COAL
+      - IRON_INGOT
+      - GOLD_INGOT
+      - DIAMOND
+      - EMERALD
+      - LAPIS_LAZULI
+      - REDSTONE

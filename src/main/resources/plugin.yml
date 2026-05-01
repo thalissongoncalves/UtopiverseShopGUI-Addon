@@ -1,0 +1,19 @@
+name: UtopiverseShopGUI-Addon
+version: 1.0
+main: net.arcanestudios.rotatingsell.RotatingSell
+api-version: 1.21
+depend: [ShopGUIPlus]
+softdepend: [PlaceholderAPI, ShopGUIPlus-SellGUI, Vault]
+# Load before SellGUI so our InventoryCloseEvent (LOWEST) runs first and can snapshot items
+# before SellGUI or other plugins clear the top inventory.
+loadbefore:
+  - ShopGUIPlus-SellGUI
+commands:
+  rotatesell:
+    description: Main command for UtopiverseShopGUI-Addon
+    permission: rotatesell.admin
+    usage: /<command> [reload|info|rotate|debug]
+permissions:
+  rotatesell.admin:
+    description: Administrative permission for UtopiverseShopGUI-Addon
+    default: op

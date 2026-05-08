@@ -175,7 +175,7 @@ public class RotationManager {
                 groupName, activeItem, multiplier, TimeFormatter.formatDuration(config.durationMs())
         ));
 
-        if (plugin.getShopListener() != null) {
+        if (plugin.getShopListener() != null && plugin.getRotationManager() != null) {
             plugin.getShopListener().refreshAllOnlineModifiers();
         }
 
